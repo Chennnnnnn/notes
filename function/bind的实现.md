@@ -9,7 +9,7 @@ if (!Function.prototype.bind) {
         that = this, 
         fBound = function () {
           return that.apply(oThis? 
-                this : oThis || window,
+                oThis : this || window,
                 aArgs.concat([].slice.call(arguments)));
         };
     return fBound;
