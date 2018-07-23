@@ -4,15 +4,17 @@
 //适用 get 或 post
 
 ;(function(window,undefined){
-    var ajax = function (type,url,data) {
+    var ajax = function (url,method,data) {
         return new Promise(function(resolve, reject){
             var xhr = new XMLHttpRequest();
             // 查询字符串
-            if(type === 'get' && data){
+            if(method.toLowerCase() === 'get' && data){
+                url += '?';
                 for(var key in data){
                     url += `${encodeURIComponent(key)}=${encodeURIComponent(data[key])}&`;
                 }
-                url = url.slice(-1);
+                
+                url = url.slice(0,-1);
             }
             xhr.onload = function(){
                 if(xhr.status >= 200 && xhr.status < 300 || xhr.status == 304){
@@ -31,12 +33,13 @@
             xhr.onabort = function() {
                 reject('请求取消！');
             };
-            xhr.open(type,url,true);
-            if(type === 'get'){
+            xhr.open(method,url,true);
+            if(method.toLowerCase() === 'get'){
                 xhr.send(null);
             } else  {
                 xhr.send(JSON.stringify(data));
             }
+            
         })
 
     };
@@ -47,9 +50,10 @@
 test
 
 ```
-ajax('get','https://www.baidu.com/')
+ajax('https://www.baidu.com/','get',{name:'chen'})
 .then(function(result){
     console.log(result);
 })
 
 ```
+
