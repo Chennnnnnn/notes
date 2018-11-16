@@ -1,18 +1,19 @@
 ### 硬绑定
 ```
+
 if (!Function.prototype.bind) {
-  Function.prototype.bind = function (oThis) {
+  Function.prototype.bind = function (...arg) {
     if (typeof this !== "function") {
       throw new TypeError("error");
     }
-    var aArgs = [].slice.call(arguments, 1), 
-        that = this, 
-        fBound = function () {
-          return that.apply(oThis? 
-                oThis : this || window,
-                aArgs.concat([].slice.call(arguments)));
-        };
-    return fBound;
+    var oThis = arg[0]
+        aArgs = arg.slice(1), 
+        that = this;
+    return function (...args) {
+      return that.apply(oThis? 
+        oThis : this || window,
+        [...aArgs,...args]);
+    };
   };
 }
 
