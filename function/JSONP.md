@@ -6,7 +6,7 @@
 ```
 (function(window,document){
     function JSONP(url,data,callback) {
-        var cb = `jsonp${new Date().getTime()}`
+        var cb = `jsonp${Date.now()}`
         var s  = document.createElement('script');
         var time = 10000; 
 

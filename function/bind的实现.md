@@ -2,17 +2,15 @@
 ```
 
 if (!Function.prototype.bind) {
-  Function.prototype.bind = function (...arg) {
+  Function.prototype.bind = function (oThis,...Args) {
     if (typeof this !== "function") {
       throw new TypeError("error");
     }
-    var oThis = arg[0]
-        aArgs = arg.slice(1), 
-        that = this;
+    var that = this;
     return function (...args) {
       return that.apply(oThis? 
         oThis : this || window,
-        [...aArgs,...args]);
+        [...Args,...args]);
     };
   };
 }
